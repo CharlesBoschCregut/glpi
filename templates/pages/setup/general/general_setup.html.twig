@@ -217,6 +217,22 @@
 </div>
 
 <div class="hr-text">
+    <i class="ti ti-user" aria-hidden="true"></i>
+    <span>{{ __('User pictures') }}</span>
+</div>
+
+<div class="row ps-4">
+    {{ fields.dropdownYesNo(
+        'allow_animated_user_pictures',
+        config['allow_animated_user_pictures'] ?? 0,
+        __('Allow animated user pictures'),
+        inline_field_options|merge({
+            'width': 'auto',
+        })
+    ) }}
+</div>
+
+<div class="hr-text">
     <i class="ti ti-lock" aria-hidden="true"></i>
     <span>{{ __('Item locks') }}</span>
 </div>

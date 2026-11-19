@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # gitfiiisch, 2026
 # Thorsten, 2026
@@ -43,7 +43,7 @@
 # Slow Rider, 2026
 # alexandre delaunay <delaunay.alexandre@gmail.com>, 2026
 # Simon, 2026
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -38612,3 +38612,11 @@ msgstr "Reservierung hinzufügen"
 #: js/src/vue/Reservations/ReservationScheduler.vue:139
 msgid "Edit reservation"
 msgstr "Reservierung bearbeiten"
+
+#: templates/pages/setup/general/general_setup.html.twig
+msgid "User pictures"
+msgstr "Benutzerbilder"
+
+#: templates/pages/setup/general/general_setup.html.twig
+msgid "Allow animated user pictures"
+msgstr "Animierte Benutzerbilder erlauben"

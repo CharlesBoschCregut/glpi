@@ -1194,7 +1194,16 @@ class User extends CommonDBTM implements TreeBrowseInterface
 
                     // output images with possible transparency to png, other to jpg
                     $extension = strtolower(pathinfo($fullpath, PATHINFO_EXTENSION));
-                    $extension = in_array($extension, ['png', 'gif']) ? 'png' : 'jpg';
+if (
+                        $extension === 'gif'
+                        && !empty($CFG_GLPI['allow_animated_user_pictures'])
+                    ) {
+                        // Keep GIF to preserve animation.
+                        $extension = 'gif';
+                    } else {
+                        // Current GLPI behavior.
+                        $extension = in_array($extension, ['png', 'gif'], true) ? 'png' : 'jpg';
+                    }
 
                     if (!file_exists(GLPI_PICTURE_DIR . "/$sub")) {
                         mkdir(GLPI_PICTURE_DIR . "/$sub");
@@ -1207,9 +1216,14 @@ class User extends CommonDBTM implements TreeBrowseInterface
                         // For display
                         $input['picture'] = "{$sub}/{$filename}.{$extension}";
 
-                        //prepare a thumbnail
+                        if (
+                            $extension !== 'gif'
+                            || empty($CFG_GLPI['allow_animated_user_pictures'])
+                        ) {
                         $thumb_path = GLPI_PICTURE_DIR . "/{$sub}/{$filename}_min.{$extension}";
                         Toolbox::resizePicture($picture_path, $thumb_path);
+                        }
+
                     } else {
                         Session::addMessageAfterRedirect(
                             __s('Moving temporary file failed.'),
@@ -6408,6 +6422,15 @@ HTML;
     public static function getThumbnailURLForPicture(?string $picture = null)
     {
         global $CFG_GLPI;
+
+        
+        if (
+            !empty($CFG_GLPI['allow_animated_user_pictures'])
+            && !empty($picture)
+            && strtolower(pathinfo($picture, PATHINFO_EXTENSION)) === 'gif'
+        ) {
+            return self::getURLForPicture($picture);
+        }
 
         if (!empty($picture)) {
             $tmp = explode(".", $picture);
